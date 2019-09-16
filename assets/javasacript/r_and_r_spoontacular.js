@@ -26,7 +26,7 @@ const createCards = (recipeResults, recipes) => {
     console.log(recipes[i]);
     // create jquery object to put all items into body.
     // test  is the placeholder text for index.html div
-    const $card = $("<div>").addClass("card recipe");
+    const $card = $("<div>").addClass("card recipe mb-2");
     $card.attr("data-id", recipeResults[i].id);
     const $cardImgTop = $("<img>").addClass("card-img-top img-thumbnail");
     $cardImgTop.attr(
