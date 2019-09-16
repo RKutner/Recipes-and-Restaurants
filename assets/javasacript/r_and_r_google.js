@@ -1,5 +1,6 @@
 
 
+
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
 $('#searchClick').on('click', function(){
@@ -37,3 +38,12 @@ const displayRestaraunts = () => {
 }
 displayRestaraunts()
 })
+
+$("#search").on('click', function(){
+    event.preventDefault()
+    
+    navigator.geolocation.getCurrentPosition(function(position){
+    
+        console.log(position)
+    })
+    })
