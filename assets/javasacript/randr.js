@@ -1,7 +1,8 @@
 const obtainRecipe = response => {
     const results = response.results
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < results.length; i++) {
         console.log(results[i])
+        // create jquery object to put all items into body.
     }
 }
 
