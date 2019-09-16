@@ -49,7 +49,8 @@ const createCards = (recipeResults, recipes) => {
 
 const snoonacularCalls = event => {
   event.preventDefault();
-  // const food = $("#submit").val().trim();
+  // const food = $("#searchField").val().trim();
+  console.log("currenting using place holder text in JS to reduce API calls")
   const food = "pineapple";
   const url = `https://api.spoonacular.com/recipes/search?query=${food}&apiKey=bb9cefd1ba364505863a1ddb120313da&instructionsRequired=true&type=main course`;
 
@@ -65,5 +66,5 @@ const consoleLogInfo = event => {
   console.log();
 };
 
-$(document).on("click", "#submit", snoonacularCalls);
+$(document).on("click", "#searchClick", snoonacularCalls);
 $(document).on("click", ".recipe", consoleLogInfo);
