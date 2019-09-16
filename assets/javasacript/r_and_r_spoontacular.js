@@ -43,7 +43,7 @@ const createCards = (recipeResults, recipes) => {
 
     $cardBody.append($cardTitle, $cardSubtitle, $cardText);
     $card.append($cardImgTop, $cardBody);
-    $(".test").append($card);
+    $("#recipieList").append($card);
   }
 };
 
