@@ -1,20 +1,10 @@
 
-$input = $('<input>').attr({
-  id: "input"
-})
-$button = $('<button>').text("Submit")
-$button.attr({
-  type: "submit",
-  id: "submit",
-  value: "Submit",
-  class: "btn btn-lg btn-primary"
-})
-$('#main').append($input, $button)
+
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
-$('#submit').on('click', function(){
-  $('#input').val("")
-  let searchWord = $('#input').val().trim()
+$('#searchClick').on('click', function(){
+
+  let searchWord = $('#searchField').val().trim()
 queryUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=37.87158,-122.25992&radius=1500&type=restaurant&keyword=key=AIzaSyC5MbQE-0lUqvgXhxVRhDCK05t0nvMrphM'
 
 
@@ -41,7 +31,7 @@ const displayRestaraunts = () => {
     $addressDiv.text(address)
     $price_levelDiv.text("Price Level: " + price_level)
     $infoDiv.append($nameDiv, $addressDiv, $price_levelDiv)
-    $('#main').append($infoDiv)
+    $('#googleMaps').append($infoDiv)
     }
   })
 }
