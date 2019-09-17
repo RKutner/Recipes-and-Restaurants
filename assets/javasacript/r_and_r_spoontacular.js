@@ -1,6 +1,6 @@
 let savedRecipes = {};
 const apiKey = ""; //spoonacular api
-const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+// const proxyurl = 'https://cors-anywhere.herokuapp.com/';
 
 //spoonacular issue
 const obtainRecipe = response => {
@@ -126,7 +126,7 @@ $('.initSearchClick').on("click", () => {
     return;
   }
 
-  ('.searchField').val(""); // clears this search field
+  $('.searchField').val(""); // clears this search field
   $('#initSearchPage').hide();
   $('#main').show();
 });
