@@ -1,6 +1,6 @@
 let savedRecipes = {};
 const apiKey = ""; //spoonacular api
-const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+// const proxyurl = 'https://cors-anywhere.herokuapp.com/';
 
 //spoonacular issue
 const obtainRecipe = response => {
@@ -55,9 +55,9 @@ const createCards = (recipeResults, recipes) => {
 
 const snoonacularCalls = event => {
   event.preventDefault();
-  // const food = $("#searchField").val().trim();
-  console.log("currenting using place holder text in JS to reduce API calls")
-  const food = "pineapple";
+  const food = $("#searchField").val().trim();
+  // console.log("currenting using place holder text in JS to reduce API calls")
+  // const food = "pineapple";
   const url = `https://api.spoonacular.com/recipes/search?query=${food}&apiKey=${apiKey}&number=2&instructionsRequired=true&type=main course`;
 
   $.ajax({
@@ -126,7 +126,7 @@ $('.initSearchClick').on("click", () => {
     return;
   }
 
-  ('.searchField').val(""); // clears this search field
+  $('.searchField').val(""); // clears this search field
   $('#initSearchPage').hide();
   $('#main').show();
 });
