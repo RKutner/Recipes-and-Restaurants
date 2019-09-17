@@ -12,7 +12,7 @@ const obtainRecipe = response => {
 const obtainRecipeInfo = (recipeResults, ids) => {
   const url = `https://api.spoonacular.com/recipes/informationBulk?ids=${ids.join(
     ","
-  )}&apiKey=bb9cefd1ba364505863a1ddb120313da`;
+  )}&apiKey=9eeb1c3c7a454e8784a2ce72c0ac6299`;
   $.ajax({
     url,
     method: "GET"
