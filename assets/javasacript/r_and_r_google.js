@@ -3,9 +3,9 @@
 
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
-$('#searchClick').on('click', function(event){
+$('.searchClick').on('click', function(event){
   event.preventDefault();
-  let searchWord = $('#searchField').val().trim()
+  let searchWord = $('.searchField').val().trim()
 
 
   const displayRestaraunts = () => {
@@ -18,23 +18,17 @@ $('#searchClick').on('click', function(event){
       for (let i = 0; i < results.length; i++){
       var name = results[i].name
       console.log(results)
-      // var link = results[i].photos[0].html_attributes
       var address = results[i].vicinity
       var price_level = results[i].price_level
-
       $infoDiv = $('<div>')
       $infoDiv.addClass("card card-text text-center bordered")
       $nameDiv = $('<div>')
       $linkDiv = $('<div>')
-      $addressDiv = $('<div>')
+      $addressDiv = $('<div>')   
       $price_levelDiv = $('<div>')
-
-  
       $nameDiv.text(name)
-      // $linkDiv.text(link)
       $addressDiv.text(address)
       $price_levelDiv.text("Price Level: " + price_level)
-      
       $infoDiv.append($nameDiv, $addressDiv, $price_levelDiv)
       $('#googleMaps').append($infoDiv)
       }
