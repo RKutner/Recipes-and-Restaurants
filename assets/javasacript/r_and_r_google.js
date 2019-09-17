@@ -20,16 +20,20 @@ $('.searchClick').on('click', function(event){
       console.log(results)
       var address = results[i].vicinity
       var price_level = results[i].price_level
+      var rating = results[i].rating
+
       $infoDiv = $('<div>')
       $infoDiv.addClass("card card-text text-center bordered")
       $nameDiv = $('<div>')
       $linkDiv = $('<div>')
       $addressDiv = $('<div>')   
       $price_levelDiv = $('<div>')
+      $ratingDiv = $('<div>')
+      $ratingDiv.text("Rating: " + rating +" / 5")
       $nameDiv.text(name)
       $addressDiv.text(address)
       $price_levelDiv.text("Price Level: " + price_level)
-      $infoDiv.append($nameDiv, $addressDiv, $price_levelDiv)
+      $infoDiv.append($nameDiv, $addressDiv, $price_levelDiv, $ratingDiv)
       $('#googleMaps').append($infoDiv)
       }
     })
