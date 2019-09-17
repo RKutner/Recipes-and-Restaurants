@@ -1,6 +1,6 @@
 let savedRecipes = {};
 const apiKey = ""; //spoonacular api
-// const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+
 
 //spoonacular issue
 const obtainRecipe = response => {
