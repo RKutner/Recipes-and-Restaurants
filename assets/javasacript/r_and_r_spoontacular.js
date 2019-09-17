@@ -77,7 +77,8 @@ $('.initSearchClick').on("click", () => {
   if ($('.searchField').val() === "") { 
     return;
   }
-  
+
+  ('.searchField').val(""); // clears this search field
   $('#initSearchPage').hide();
   $('#main').show();
 });
