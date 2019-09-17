@@ -52,7 +52,7 @@ $('.searchClick').on('click', function(event){
       }  
     $('#googleMaps').empty()
     $.ajax({
-      url: proxyurl + `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=1500&type=restaurant&keyword=${searchWord}&key=AIzaSyC5MbQE-0lUqvgXhxVRhDCK05t0nvMrphM`,
+      url: proxyurl + `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=37.8704471,-122.25489800000001&radius=1500&type=restaurant&keyword=${searchWord}&key=AIzaSyC5MbQE-0lUqvgXhxVRhDCK05t0nvMrphM`,
       method: 'GET'
     }).then(function(response){
       var results = response.results
