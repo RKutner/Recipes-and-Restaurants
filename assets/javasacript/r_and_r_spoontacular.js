@@ -1,6 +1,6 @@
 let savedRecipes = {};
 const apiKey = ""; //spoonacular api
-
+var database = firebase.database();
 //spoonacular issue
 const obtainRecipe = response => {
   const results = response.results;
