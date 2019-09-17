@@ -1,3 +1,29 @@
+// i know i'm on the right path here, but it's commented out until it's working.
+// // latitude
+// var lat;
+// // longitude
+// var lng;
+
+// $(document).ready(function () {
+//   // checks if they are on a modern-enough system to pull their location (probably)
+//   if (navigator.geolocation) {
+//     // pulls location
+//     navigator.geolocation.getCurrentPosition(function (position) {
+//       // assigns latitude and longitude to lat and lng
+//       lat=position.coords.latitude;
+//       lng=position.coords.longitude;
+//       console.log(lat);
+//       console.log(lng);
+
+
+//     })} else{
+//       // need to prompt for zip code
+//       console.log("geolocation is not supported")
+//       // 
+//     }
+
+// });
+
 
 
 
@@ -9,9 +35,24 @@ $('.searchClick').on('click', function(event){
 
 
   const displayRestaraunts = () => {
+    if (navigator.geolocation) {
+      // pulls location
+      navigator.geolocation.getCurrentPosition(function (position) {
+        // assigns latitude and longitude to lat and lng
+        lat=position.coords.latitude;
+        lng=position.coords.longitude;
+        console.log(lat);
+        console.log(lng);
+  
+  
+      })} else{
+        // need to prompt for zip code
+        console.log("geolocation is not supported")
+        // 
+      }  
     $('#googleMaps').empty()
     $.ajax({
-      url: proxyurl + `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=37.87158, -122.25992&radius=1500&type=restaurant&keyword=${searchWord}&key=AIzaSyC5MbQE-0lUqvgXhxVRhDCK05t0nvMrphM`,
+      url: proxyurl + `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=1500&type=restaurant&keyword=${searchWord}&key=AIzaSyC5MbQE-0lUqvgXhxVRhDCK05t0nvMrphM`,
       method: 'GET'
     }).then(function(response){
       var results = response.results
