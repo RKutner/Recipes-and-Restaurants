@@ -66,5 +66,18 @@ const consoleLogInfo = event => {
   console.log();
 };
 
-$(document).on("click", "#searchClick", snoonacularCalls);
+$(document).on("click", ".searchClick", snoonacularCalls);
 $(document).on("click", ".recipe", consoleLogInfo);
+
+// initial on load Page Change functions -Andy
+$('.initSearchClick').on("click", () => {
+  event.preventDefault();
+
+  // prevents transition if searchField is blank
+  if ($('.searchField').val() === "") { 
+    return;
+  }
+  
+  $('#initSearchPage').hide();
+  $('#main').show();
+});
