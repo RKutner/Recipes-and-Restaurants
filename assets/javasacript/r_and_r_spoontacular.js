@@ -52,14 +52,15 @@ const createCards = (recipeResults, recipes) => {
   console.log(savedRecipes)
 };
 
+
 const snoonacularCalls = event => {
   event.preventDefault();
-  // const food = $(".searchField").val().trim();
-  console.log("currenting using place holder text in JS to reduce API calls")
-  const food = "pineapple";
+  const food = $(".searchField").val().trim();
+  // console.log("currenting using place holder text in JS to reduce API calls")
+  // const food = "pineapple";
   // console.log(food);
   const url = `https://api.spoonacular.com/recipes/search?query=${food}&apiKey=${apiKey}&number=2&instructionsRequired=true&type=main course`;
-
+  $('#recipieList').empty()
   $.ajax({
     url,
     method: "GET"
@@ -127,8 +128,9 @@ $('.initSearchClick').on("click", event => {
   if ($('.searchField').val() === "") { 
     return;
   }
+  displayRestaraunts(); // r_and_r_google.js
   snoonacularCalls(event);
   $('#initSearchPage').empty();
   $('#main').show();
-  // displayRestaraunts(); // r_and_r_google.js
+
 });
