@@ -113,5 +113,19 @@ const consoleLogInfo = event => {
   console.log(savedRecipes[$recipe.attr("data-id")])
 };
 
-$(document).on("click", "#searchClick", snoonacularCalls);
+$(document).on("click", ".searchClick", snoonacularCalls);
 $(document).on("click", ".recipe", consoleLogInfo);
+
+// initial on load Page Change functions -Andy
+$('.initSearchClick').on("click", () => {
+  event.preventDefault();
+
+  // prevents transition if searchField is blank
+  if ($('.searchField').val() === "") { 
+    return;
+  }
+
+  ('.searchField').val(""); // clears this search field
+  $('#initSearchPage').hide();
+  $('#main').show();
+});
