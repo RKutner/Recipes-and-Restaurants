@@ -1,5 +1,5 @@
 let savedRecipes = {};
-const apiKey = "bb9cefd1ba364505863a1ddb120313da"; //spoonacular api
+const apiKey = "9eeb1c3c7a454e8784a2ce72c0ac6299"; //spoonacular api
 
 
 //spoonacular issue
@@ -68,6 +68,7 @@ const snoonacularCalls = event => {
   }).then(obtainRecipe);
 
   $('#searchTarget').text(`You're looking for ${food}`);
+  displayRestaraunts();
 };
 
 /*
