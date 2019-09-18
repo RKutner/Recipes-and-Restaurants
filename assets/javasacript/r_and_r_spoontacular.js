@@ -63,7 +63,18 @@ const createCards = food => {
         const $cardText = $("<p>").addClass("card-text");
         $cardText.text(`Ready In: ${recipeResults.readyInMinutes} minutes`);
 
-        $cardBody.append($cardTitle, $cardSubtitle, $cardText);
+        const $cardRow = $("<div>").addClass("row");
+        const $cardColLeft = $("<div>").addClass("col-sm-10");
+        const $cardColRight = $("<div>").addClass("col-sm-2");
+        const $cardButton = $("<button>").addClass("fas fa-list-alt btn-lg btn-warning mt-3 getRecipe");
+        $cardButton.attr("data-toggle", "modal")
+        $cardButton.attr("data-target", "#recipeModal")
+        $cardButton.attr("type", "button")
+        
+        $cardColLeft.append($cardTitle, $cardSubtitle, $cardText);
+        $cardColRight.append($cardButton);
+
+        $cardBody.append($cardRow.append($cardColLeft, $cardColRight));
         $card.append($cardImgTop, $cardBody);
         $("#recipieList").append($card);
       }
@@ -123,7 +134,7 @@ $(document).on("click", ".searchClick", event => {
   snoonacularCalls();
   displayRestaraunts();
 });
-$(document).on("click", ".recipe", consoleLogInfo);
+$(document).on("click", ".getRecipe", consoleLogInfo);
 
 // initial on load Page Change functions -Andy
 $(".initSearchClick").on("click", event => {
