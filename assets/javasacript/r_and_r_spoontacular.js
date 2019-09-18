@@ -107,9 +107,27 @@ const consoleLogInfo = event => {
   .ref(`/${food}/${id}/1`)
   .once("value")
   .then(snapshot => {
-    let info = snapshot.val();
+    const info = snapshot.val();
     console.log(info)
+    //name of the recipe 
+
+    //ingredients
+    const ingreidentList = [];
+    const stepList =[];
+    info.extendedIngredients.forEach(ingredient => {
+      ingreidentList.push(`${ingredient.amount} ${ingredient.unit} ${ingredient.name}`)
+    })
+    //steps
+    info.analyzedInstructions[0].steps.forEach((step,index) => {
+      stepList.push(`Step ${index+1}: ${step.step}`)
+    })
+
+    console.log(info.title)
+    console.log(ingreidentList)
+    console.log(stepList)
+    console.log(info.sourceUrl)
   });
+
 };
 
 $(document).on("click", ".searchClick", event => {
