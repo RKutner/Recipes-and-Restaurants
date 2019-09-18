@@ -30,15 +30,17 @@ const saveToDB = (food,recipeResults, recipes) => {
       savedRecipes[recipeResults[i].id] = [recipeResults[i],recipes[i]]
   }
   database.ref(`/${food}/`).set(JSON.stringify(savedRecipes))
+  
+  createCards(food)
 }
 
-const createCards = (info) => {
-  console.log(info)
+const createCards = (food) => {
+  
+  database.ref(`/${food}`).once('value').then(snapshot =>{
+    let info=JSON.parse(snapshot.val());
   for (let item in info) {
-    console.log(item)
     const recipeResults = info[item][0]
     const recipes = info[item][1]
-    console.log(recipeResults)
     const $card = $("<div>").addClass("card recipe mb-2");
     $card.attr("data-id", recipeResults.id);
     const $cardImgTop = $("<img>").addClass("card-img-top img-thumbnail");
@@ -58,17 +60,18 @@ const createCards = (info) => {
     $card.append($cardImgTop, $cardBody);
     $("#recipieList").append($card);
   }
+})
 };
 
 
-const snoonacularCalls = event => {
-  event.preventDefault();
+const snoonacularCalls = () => {
+  $("#recipieList").empty()
   const food = $(".searchField").val().trim().toLowerCase();
 
   database.ref(`/${food}`).once('value').then(snapshot =>{
-    let info=JSON.parse(snapshot.val());
+    let info=snapshot.val();
     if (info){
-        createCards(info)
+      createCards(food)
     }else{
       const url = `https://api.spoonacular.com/recipes/search?query=${food}&apiKey=${apiKey}&number=5&instructionsRequired=true&type=main course`;
       $('#recipieList').empty()
@@ -79,6 +82,7 @@ const snoonacularCalls = event => {
         obtainRecipe(food,response)
       });
   }
+  
   })
 
 
@@ -96,12 +100,14 @@ const consoleLogInfo = event => { // this function is to provide more info when 
 
 
 $(document).on("click", ".searchClick", event => {
-  
-  if ($('.searchField').val() === "") { 
+  event.preventDefault();
+  let foodInput = $('.searchField').val()
+  if (foodInput === "") { 
     return;
   }
-  $('#searchTarget').text(`You're looking for ${$('.searchField').val()}`);
-  snoonacularCalls(event);
+  
+  $('#searchTarget').text(`You're looking for ${foodInput}`);
+  snoonacularCalls();
   displayRestaraunts();
 });
 $(document).on("click", ".recipe", consoleLogInfo);
@@ -109,13 +115,14 @@ $(document).on("click", ".recipe", consoleLogInfo);
 // initial on load Page Change functions -Andy
 $('.initSearchClick').on("click", event => {
   event.preventDefault();
-
-  // prevents transition if searchField is blank
-  if ($('.searchField').val() === "") { 
+  let foodInput = $('.searchField').val()
+  if (foodInput === "") { 
     return;
   }
-  displayRestaraunts(); // r_and_r_google.js
-  snoonacularCalls(event);
+  
+  $('#searchTarget').text(`You're looking for ${foodInput}`);
+  snoonacularCalls();
+  displayRestaraunts();
   $('#initSearchPage').empty();
   $('#main').show();
 
