@@ -1,6 +1,8 @@
 let savedRecipes = {};
-const apiKey = ""; //spoonacular api
+const apiKey = "9eeb1c3c7a454e8784a2ce72c0ac6299"; //spoonacular api
 var database = firebase.database();
+
+
 //spoonacular issue
 const obtainRecipe = response => {
   const results = response.results;
@@ -56,7 +58,7 @@ const createCards = (recipeResults, recipes) => {
 const snoonacularCalls = event => {
   event.preventDefault();
   const food = $(".searchField").val().trim();
-  // console.log("currenting using place holder text in JS to reduce API calls")
+
   // const food = "pineapple";
   // console.log(food);
   const url = `https://api.spoonacular.com/recipes/search?query=${food}&apiKey=${apiKey}&number=2&instructionsRequired=true&type=main course`;
@@ -66,7 +68,8 @@ const snoonacularCalls = event => {
     method: "GET"
   }).then(obtainRecipe);
 
-  $('#searchTarget').text(food);
+  $('#searchTarget').text(`You're looking for ${food}`);
+  displayRestaraunts();
 };
 
 /*
