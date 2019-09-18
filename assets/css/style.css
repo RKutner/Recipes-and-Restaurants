@@ -64,3 +64,9 @@ body,html{
     border:none !important;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .searchbar:hover > .search_input{
+    width: 250px;
+    }
+}
