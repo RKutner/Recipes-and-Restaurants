@@ -47,3 +47,8 @@ $("#search").on('click', function(){
         console.log(position)
     })
     })
+
+
+    `http://api.zip-codes.com/ZipCodesAPI.svc/1.0/ZIPCODE=${zip}?key=OLFMPABGVZQOZN3XNPZ4`
+
+    

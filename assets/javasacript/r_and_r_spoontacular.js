@@ -8,7 +8,9 @@ const obtainRecipe = (food, response) => {
   for (let i = 0; i < results.length; i++) {
     ids.push(results[i].id);
   }
+
   obtainRecipeInfo(food, results, ids);
+
 };
 
 // what i want is (response,results) => {blah blah}
@@ -27,6 +29,7 @@ const obtainRecipeInfo = (food, recipeResults, ids) => {
 const saveToDB = (food, recipeResults, recipes) => {
   let savedRecipes = {};
   for (let i = 0; i < recipes.length; i++) {
+
     savedRecipes[recipeResults[i].id] = [recipeResults[i], recipes[i]];
   }
   database.ref(`/${food}/`).set(savedRecipes);
@@ -101,6 +104,7 @@ const consoleLogInfo = event => {
   // this function is to provide more info when user clicks on a recipe
   event.preventDefault();
   const $recipe = $(event.target).closest(".recipe");
+
   const id = $recipe.attr("data-id");
   const food = $recipe.attr("data-food");
   database
@@ -110,6 +114,7 @@ const consoleLogInfo = event => {
     let info = snapshot.val();
     console.log(info)
   });
+
 };
 
 $(document).on("click", ".searchClick", event => {
@@ -133,6 +138,7 @@ $(".initSearchClick").on("click", event => {
     return;
   }
 
+
   $("#searchTarget").text(`You're looking for ${foodInput}`);
   snoonacularCalls();
   displayRestaraunts();
@@ -145,3 +151,4 @@ $(".searchField").keyup(function(event) {
     $(".initSearchClick").click();
   }
 });
+
