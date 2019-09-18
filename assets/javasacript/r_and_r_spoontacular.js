@@ -136,3 +136,9 @@ $('.initSearchClick').on("click", event => {
   $('#main').show();
 
 });
+
+$('.searchField').keyup(function(event) {
+  if (event.keyCode === 13) {
+      $('.initSearchClick').click();
+  }
+});
