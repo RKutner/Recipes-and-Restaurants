@@ -101,8 +101,15 @@ const consoleLogInfo = event => {
   // this function is to provide more info when user clicks on a recipe
   event.preventDefault();
   const $recipe = $(event.target).closest(".recipe");
-  console.log($recipe.attr("data-id"));
-  console.log(savedRecipes[$recipe.attr("data-id")]);
+  const id = $recipe.attr("data-id");
+  const food = $recipe.attr("data-food");
+  database
+  .ref(`/${food}/${id}/1`)
+  .once("value")
+  .then(snapshot => {
+    let info = snapshot.val();
+    console.log(info)
+  });
 };
 
 $(document).on("click", ".searchClick", event => {
