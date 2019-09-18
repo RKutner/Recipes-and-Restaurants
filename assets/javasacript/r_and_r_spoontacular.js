@@ -1,5 +1,5 @@
 let savedRecipes = {};
-const apiKey = ""; //spoonacular api
+const apiKey = "bb9cefd1ba364505863a1ddb120313da"; //spoonacular api
 
 
 //spoonacular issue
