@@ -18,7 +18,7 @@ const displayRestaraunts = () => {
     var rating = results[i].rating
 
     $infoDiv = $('<div>')
-    $infoDiv.addClass("card card-text text-center bordered")
+    $infoDiv.addClass("card card-text text-center bordered border-2 border-dark mb-3 pt-2 pb-2")
     $nameDiv = $('<div>')
     $linkDiv = $('<div>')
     $addressDiv = $('<div>')   
