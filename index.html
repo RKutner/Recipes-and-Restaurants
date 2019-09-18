@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Recipies & Restaurants</title>
+  <title>Recipes & Restaurants</title>
   <!-- fav icon -->
   <link rel="shortcut icon" href="./assets/pictures/rnr-icon.png" />
 
@@ -15,9 +15,9 @@
     <!-- font awesome - icons -->
     <script src="https://kit.fontawesome.com/59e6be3e18.js"></script>
     <!-- Firebase Core JavaScript Link -->
-    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-app.js"></script>
     <!-- Specific Firebase products we want (Database) -->
-    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-database.js"></script>
 
 </head>
 <body class="bg-warning">
@@ -27,14 +27,19 @@
       <div class="row align-items-center vh-100">
         <div class="col-12">
         <div class="row">
-          <span class="col-lg-6 col-sm-12 text-lg-right text-sm-center display-4 text-white mb-lg-3 mb-sm-0 mr-0"><i class="text-dark">R</i> e c i p i e s  &</span><span class="col-lg-6 col-sm-12 text-lg-left text-sm-center display-4 text-white mb-3 ml-0 pl-0"><i class="text-dark">R</i> e s t a u r a n t s</span>
+          <span class="col-lg-6 col--12 text-lg-right text-center display-4 text-white mb-lg-3 mb-sm-0 mr-0"><i class="text-dark">R</i> e c i p e s  &</span><span class="col-lg-6 col-12 text-lg-left text-center display-4 text-white mb-3 ml-0 pl-0"><i class="text-dark">R</i> e s t a u r a n t s</span>
         </div>
+        <!-- search field -->
         <div class="input-group input-group-lg">
-            <div class="input-group-prepend">
-              <button class="input-group-text bg-danger initSearchClick" id="inputGroup-sizing-lg"><i class="fa fa-search text-light"></i></button>
+            <div class="container h-100">
+              <div class="d-flex justify-content-center h-100">
+                <div class="searchbar">
+                  <input class="search_input searchField" type="text" placeholder="What do you feel like eating?">
+                  <a href="#" class="search_icon initSearchClick"><i class="fas fa-search"></i></a>
+                </div>
+              </div>
             </div>
-            <input type="text" class="form-control searchField" placeholder="What do you feel like eating?" aria-label="search field" aria-describedby="inputGroup-sizing-lg">
-          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -43,7 +48,7 @@
   <div id="main" style="display:none">
     <!-- Search Navbar -->
     <nav class="navbar navbar-dark bg-dark text-light">
-      <a class="navbar-brand text-sm-left text-center col-sm-3 col-12">Recipies & Restaurants</a>
+      <a class="navbar-brand text-sm-left text-center col-sm-3 col-12">Recipes & Restaurants</a>
       <form class="form-inline col-sm-7 col-12 d-flex flex-row-reverse">
         <input class="form-control ml-sm-2 searchField" type="search" placeholder="search" aria-label="Search" id="zipCode">
         <input class="form-control ml-sm-2 searchField" type="search" placeholder="Zip Code (optional)" aria-label="Search">
@@ -63,15 +68,32 @@
         <div class="col-lg-6 col-sm-12 border-sm-custom border-left border-dark mt-2"id="googleMaps"></div>
       </div>
     </div>
-  </div>
-
-
 
   <!-- Bootstrap & jQuery libraries -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <!-- custom js -->
+  
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyByL5H0Dsw8hjMUKUD-7yARKDoBtwtDvrM",
+    authDomain: "spoonaculardb.firebaseapp.com",
+    databaseURL: "https://spoonaculardb.firebaseio.com",
+    projectId: "spoonaculardb",
+    storageBucket: "",
+    messagingSenderId: "698196712906",
+    appId: "1:698196712906:web:2940da7b240b22c6a00333"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>  
+  
+  <!-- custom js -->
+
   <script src="./assets/javasacript/r_and_r_google.js"></script>
   <script src="./assets/javasacript/r_and_r_spoontacular.js"></script>
 </body>

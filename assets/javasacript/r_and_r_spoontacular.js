@@ -1,138 +1,154 @@
-let savedRecipes = {};
-const apiKey = "bb9cefd1ba364505863a1ddb120313da"; //spoonacular api
-
+const apiKey = "95b6a8ee9c4447c694497d6c79136605"; //spoonacular api
+var database = firebase.database();
 
 //spoonacular issue
-const obtainRecipe = response => {
+const obtainRecipe = (food, response) => {
   const results = response.results;
   const ids = [];
   for (let i = 0; i < results.length; i++) {
     ids.push(results[i].id);
   }
-  obtainRecipeInfo(results, ids);
-  // console.log(ids);
+
+  obtainRecipeInfo(food, results, ids);
+
 };
 
 // what i want is (response,results) => {blah blah}
-const obtainRecipeInfo = (recipeResults, ids) => {
+const obtainRecipeInfo = (food, recipeResults, ids) => {
   const url = `https://api.spoonacular.com/recipes/informationBulk?ids=${ids.join(
     ","
-    
   )}&apiKey=${apiKey}`;
   $.ajax({
     url,
     method: "GET"
   }).then(function(response) {
-    createCards(recipeResults, response);
+    saveToDB(food, recipeResults, response);
   });
 };
 
-const createCards = (recipeResults, recipes) => {
+const saveToDB = (food, recipeResults, recipes) => {
+  let savedRecipes = {};
   for (let i = 0; i < recipes.length; i++) {
-    // console.log(recipes[i]);
-    savedRecipes[recipeResults[i].id] = [recipeResults[i],recipes[i]]
-    const $card = $("<div>").addClass("card recipe mb-2");
-    $card.attr("data-id", recipeResults[i].id);
-    const $cardImgTop = $("<img>").addClass("card-img-top img-thumbnail");
-    $cardImgTop.attr(
-      "src",
-      ` https://spoonacular.com/recipeImages/${recipeResults[i].id}-636x393.jpg`
-    );
-    const $cardBody = $("<div>").addClass("card-body");
-    const $cardTitle = $("<h5>").addClass("card-title");
-    $cardTitle.text(recipeResults[i].title);
-    const $cardSubtitle = $("<h6>").addClass("card-subtitle");
-    $cardSubtitle.text(`Price: $${((recipes[i].pricePerServing*recipeResults[i].servings)/100).toFixed(2)}`);
-    const $cardText = $("<p>").addClass("card-text");
-    $cardText.text(`Ready In: ${recipeResults[i].readyInMinutes} minutes`);
 
-    $cardBody.append($cardTitle, $cardSubtitle, $cardText);
-    $card.append($cardImgTop, $cardBody);
-    $("#recipieList").append($card);
+    savedRecipes[recipeResults[i].id] = [recipeResults[i], recipes[i]];
   }
-  // console.log(savedRecipes)
+  database.ref(`/${food}/`).set(savedRecipes);
+
+  createCards(food);
 };
 
+const createCards = food => {
+  database
+    .ref(`/${food}`)
+    .once("value")
+    .then(snapshot => {
+      let info = snapshot.val();
+      for (let item in info) {
+        const recipeResults = info[item][0];
+        const recipes = info[item][1];
+        const $card = $("<div>").addClass("card recipe mb-2");
+        $card.attr({ "data-id": recipeResults.id, "data-food": food });
+        const $cardImgTop = $("<img>").addClass("card-img-top img-thumbnail");
+        $cardImgTop.attr(
+          "src",
+          ` https://spoonacular.com/recipeImages/${recipeResults.id}-636x393.jpg`
+        );
+        const $cardBody = $("<div>").addClass("card-body");
+        const $cardTitle = $("<h5>").addClass("card-title");
+        $cardTitle.text(recipeResults.title);
+        const $cardSubtitle = $("<h6>").addClass("card-subtitle");
+        $cardSubtitle.text(
+          `Price: $${(
+            (recipes.pricePerServing * recipeResults.servings) /
+            100
+          ).toFixed(2)}`
+        );
+        const $cardText = $("<p>").addClass("card-text");
+        $cardText.text(`Ready In: ${recipeResults.readyInMinutes} minutes`);
 
-const snoonacularCalls = event => {
-  event.preventDefault();
-  const food = $(".searchField").val().trim();
-
-  // const food = "pineapple";
-  // console.log(food);
-  const url = `https://api.spoonacular.com/recipes/search?query=${food}&apiKey=${apiKey}&number=2&instructionsRequired=true&type=main course`;
-  $('#recipieList').empty()
-  $.ajax({
-    url,
-    method: "GET"
-  }).then(obtainRecipe);
-
-  $('#searchTarget').text(`You're looking for ${food}`);
+        $cardBody.append($cardTitle, $cardSubtitle, $cardText);
+        $card.append($cardImgTop, $cardBody);
+        $("#recipieList").append($card);
+      }
+    });
 };
 
-/*
-const snoonacularCalls = event => {
-  event.preventDefault();
-  const food = $("#searchField")
+const snoonacularCalls = () => {
+  $("#recipieList").empty();
+  const food = $(".searchField")
     .val()
-    .trim();
-  // console.log("currenting using place holder text in JS to reduce API calls")
-  // const food = "pineapple";
-  const queryURL = `http://www.recipepuppy.com/api/?q=${food}`;
+    .trim()
+    .toLowerCase();
 
-  $.ajax({
-    url:proxyurl+queryURL,
-    method: "GET"
-  }).then(obtainRecipe);
+  database
+    .ref(`/${food}`)
+    .once("value")
+    .then(snapshot => {
+      let info = snapshot.val();
+      if (info) {
+        createCards(food);
+      } else {
+        const url = `https://api.spoonacular.com/recipes/search?query=${food}&apiKey=${apiKey}&number=5&instructionsRequired=true&type=main course`;
+        $("#recipieList").empty();
+        $.ajax({
+          url,
+          method: "GET"
+        }).then(response => {
+          obtainRecipe(food, response);
+        });
+      }
+    });
 };
-
-const obtainRecipe = response => {
-
-  response = JSON.parse(response);
-  const results = response.results
-  $("#recipieList").empty()
-  for (let i = 0; i < results.length; i++) {
-    console.log(results[i])
-    const $card = $("<div>").addClass("card recipe mb-2");
-    const $cardImgTop = $("<img>").addClass("card-img-top img-thumbnail");
-    $cardImgTop.attr("src", results[i].thumbnail);
-    const $cardBody = $("<div>").addClass("card-body");
-    const $cardTitle = $("<h5>").addClass("card-title");
-    $cardTitle.text(results[i].title);
-    const $cardText = $("<p>").addClass("card-text");
-    $cardText.text(`Ingredients list: ${results[i].ingredients}`);
-
-    $cardBody.append($cardTitle, $cardText);
-    $card.append($cardImgTop, $cardBody);
-    $("#recipieList").append($card);
-  }
-  // console.log(savedRecipes);
-};
-
-*/
 
 const consoleLogInfo = event => {
-  event.preventDefault()
+  // this function is to provide more info when user clicks on a recipe
+  event.preventDefault();
   const $recipe = $(event.target).closest(".recipe");
-  // console.log($recipe.attr("data-id"));
-  // console.log(savedRecipes[$recipe.attr("data-id")])
+
+  const id = $recipe.attr("data-id");
+  const food = $recipe.attr("data-food");
+  database
+  .ref(`/${food}/${id}/1`)
+  .once("value")
+  .then(snapshot => {
+    let info = snapshot.val();
+    console.log(info)
+  });
+
 };
 
-$(document).on("click", ".searchClick", snoonacularCalls);
+$(document).on("click", ".searchClick", event => {
+  event.preventDefault();
+  let foodInput = $(".searchField").val();
+  if (foodInput === "") {
+    return;
+  }
+
+  $("#searchTarget").text(`You're looking for ${foodInput}`);
+  snoonacularCalls();
+  displayRestaraunts();
+});
 $(document).on("click", ".recipe", consoleLogInfo);
 
 // initial on load Page Change functions -Andy
-$('.initSearchClick').on("click", event => {
+$(".initSearchClick").on("click", event => {
   event.preventDefault();
-
-  // prevents transition if searchField is blank
-  if ($('.searchField').val() === "") { 
+  let foodInput = $(".searchField").val();
+  if (foodInput === "") {
     return;
   }
-  displayRestaraunts(); // r_and_r_google.js
-  snoonacularCalls(event);
-  $('#initSearchPage').empty();
-  $('#main').show();
 
 
+  $("#searchTarget").text(`You're looking for ${foodInput}`);
+  snoonacularCalls();
+  displayRestaraunts();
+  $("#initSearchPage").empty();
+  $("#main").show();
 });
+
+$(".searchField").keyup(function(event) {
+  if (event.keyCode === 13) {
+    $(".initSearchClick").click();
+  }
+});
+
