@@ -67,7 +67,7 @@ const snoonacularCalls = event => {
     method: "GET"
   }).then(obtainRecipe);
 
-  $('#searchTarget').text(food);
+  $('#searchTarget').text(`You're looking for ${food}`);
 };
 
 /*
