@@ -10,7 +10,7 @@ const obtainRecipe = response => {
     ids.push(results[i].id);
   }
   obtainRecipeInfo(results, ids);
-  console.log(ids);
+  // console.log(ids);
 };
 
 // what i want is (response,results) => {blah blah}
@@ -29,7 +29,7 @@ const obtainRecipeInfo = (recipeResults, ids) => {
 
 const createCards = (recipeResults, recipes) => {
   for (let i = 0; i < recipes.length; i++) {
-    console.log(recipes[i]);
+    // console.log(recipes[i]);
     savedRecipes[recipeResults[i].id] = [recipeResults[i],recipes[i]]
     const $card = $("<div>").addClass("card recipe mb-2");
     $card.attr("data-id", recipeResults[i].id);
@@ -50,7 +50,7 @@ const createCards = (recipeResults, recipes) => {
     $card.append($cardImgTop, $cardBody);
     $("#recipieList").append($card);
   }
-  console.log(savedRecipes)
+  // console.log(savedRecipes)
 };
 
 
@@ -114,8 +114,8 @@ const obtainRecipe = response => {
 const consoleLogInfo = event => {
   event.preventDefault()
   const $recipe = $(event.target).closest(".recipe");
-  console.log($recipe.attr("data-id"));
-  console.log(savedRecipes[$recipe.attr("data-id")])
+  // console.log($recipe.attr("data-id"));
+  // console.log(savedRecipes[$recipe.attr("data-id")])
 };
 
 $(document).on("click", ".searchClick", snoonacularCalls);

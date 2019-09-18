@@ -11,24 +11,33 @@ $(document).ready(function () {
       // assigns latitude and longitude to lat and lng
       lat=position.coords.latitude;
       lng=position.coords.longitude;
-      lat=lat.toFixed(5)
-      lng=lng.toFixed(5)
-      console.log(lat);
-      console.log(lng);
+      latTrunc=lat.toFixed(5)
+      lngTrunc=lng.toFixed(5)
 
 
     })} else{
       // need to prompt for zip code
-      console.log("geolocation is not supported")
       // 
     }
 
 });
 
 
-
-
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
+  function zipSearch(){
+  var zipForSearch=$("#zipCode").val();
+    $.ajax({
+  url: proxyurl+ `http://api.zip-codes.com/ZipCodesAPI.svc/1.0/QuickGetZipCodeDetails/${zipForSearch}?key=OLFMPABGVZQOZN3XNPZ4`,
+  method:"GET"
+    }).then(function(response){
+      console.log(response);
+  
+    })
+  
+  }
+  if ($(("#zipCode").val!==""));{
+    zipSearch()
+  }
 const displayRestaraunts = () => {
   let searchWord = $('.searchField').val().trim()
   $('#googleMaps').empty()
@@ -61,7 +70,6 @@ const displayRestaraunts = () => {
     }
   })
 }
-
 
   displayRestaraunts()
 
