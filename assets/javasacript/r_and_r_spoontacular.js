@@ -134,4 +134,5 @@ $('.initSearchClick').on("click", event => {
   $('#initSearchPage').empty();
   $('#main').show();
 
+
 });
