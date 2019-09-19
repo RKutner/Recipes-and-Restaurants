@@ -36,7 +36,7 @@ $(document).ready(function () {
   
   
   function zipSearch() {
-    const zipCode = $("#zipCode").val();
+    const zipCode = $(".zipCode").val();
       $.ajax({
           url: proxyurl + `http://api.zip-codes.com/ZipCodesAPI.svc/1.0/QuickGetZipCodeDetails/${zipCode}?key=OLFMPABGVZQOZN3XNPZ4`,
           method: "GET"
