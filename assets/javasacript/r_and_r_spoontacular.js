@@ -217,7 +217,7 @@ $(document).on("click", ".searchClick", event => {
     return;
   }
 
-  if($("#zipCode").val()){
+  if($(".zipCode").val()){
     zipSearch()
   }else{
     

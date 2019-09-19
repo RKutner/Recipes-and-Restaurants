@@ -2,10 +2,11 @@
 var lat;
 // longitude
 var lng;
-// prevents CORS errors
-const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
 let latTrunc;
 let lngTrunc;
+// prevents CORS errors
+const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
 
 
@@ -19,8 +20,8 @@ $(document).ready(function () {
       lng = position.coords.longitude;
       latTrunc = lat.toFixed(5)
       lngTrunc = lng.toFixed(5)
-      console.log(latTrunc);
-      console.log(lngTrunc);
+      // console.log(latTrunc);
+      // console.log(lngTrunc);
 
 
       
@@ -42,12 +43,8 @@ $(document).ready(function () {
           method: "GET"
         }).then(function (response) {
           console.log(response)
-          console.log(response.Latitude);
-          console.log(response.Longitude);
           lat = response.Latitude;
           lng = response.Longitude;
-          console.log(lat);
-          console.log(lng);
             latTrunc = parseFloat(lat.toFixed(5))
             lngTrunc = parseFloat(lng.toFixed(5))
             displayRestaraunts()
@@ -75,7 +72,7 @@ const displayRestaraunts = () => {
     var address = results[i].vicinity
     var price_level = results[i].price_level
     var rating = results[i].rating
-    var link = results[i].photos[0].html_attributions[0]
+    // var link = results[i].photos[0].html_attributions[0]
     // console.log(link)
     $infoDiv = $('<div>')
     $infoDiv.addClass("card card-text text-center bordered border-2 border-dark mb-3 pt-2 pb-2")
