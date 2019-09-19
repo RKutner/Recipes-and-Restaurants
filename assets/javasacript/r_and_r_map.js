@@ -39,16 +39,16 @@ const displayRestaraunts = () => {
 displayRestaraunts()
 })
 
-$("#search").on('click', function(){
-    event.preventDefault()
+// $("#search").on('click', function(){
+//     event.preventDefault()
     
-    navigator.geolocation.getCurrentPosition(function(position){
+//     navigator.geolocation.getCurrentPosition(function(position){
     
-        console.log(position)
-    })
-    })
+//         console.log(position)
+//     })
+//     })
 
 
-    `http://api.zip-codes.com/ZipCodesAPI.svc/1.0/ZIPCODE=${zip}?key=OLFMPABGVZQOZN3XNPZ4`
+//     `http://api.zip-codes.com/ZipCodesAPI.svc/1.0/ZIPCODE=${zip}?key=OLFMPABGVZQOZN3XNPZ4`
 
     

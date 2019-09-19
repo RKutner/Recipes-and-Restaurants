@@ -151,7 +151,7 @@ const snoonacularCalls = () => {
       if (info) {
         createCards(food);
       } else {
-        const url = `https://api.spoonacular.com/recipes/search?query=${food}&apiKey=${apiKey}&number=5&instructionsRequired=true&type=main course`;
+        const url = `https://api.spoonacular.com/recipes/search?apiKey=${apiKey}&query==${food}&types=main course,side dish,dessert,appetizer,salad,bread,breakfast,soup,fingerfood,snack`;
         $("#recipieList").empty();
         $.ajax({
           url,
