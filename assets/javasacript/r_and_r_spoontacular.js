@@ -127,10 +127,12 @@ const consoleLogInfo = event => {
     //name of the recipe 
 
     //ingredients
-    const ingreidentList = [];
+    const ingredientsList = [];
     const stepList =[];
     info.extendedIngredients.forEach(ingredient => {
-      ingreidentList.push(`${ingredient.amount} ${ingredient.unit} ${ingredient.name}`)
+
+      ingredientsList.push(`${ingredient.original}`)
+      // ingredientsList.push(`${ingredient.amount} ${ingredient.unit} ${ingredient.name}`)
     })
     //steps
     info.analyzedInstructions[0].steps.forEach((step,index) => {
@@ -138,9 +140,18 @@ const consoleLogInfo = event => {
     })
 
     console.log(info.title)
-    console.log(ingreidentList)
+    console.log(ingredientsList)
     console.log(stepList)
     console.log(info.sourceUrl)
+
+    $('#recipeModalTitle').text(info.title);
+
+    for (let i = 0; i < ingredientsList.length; i++){
+      $('#ingredients').append($('<p>').addClass("font-weight-light mb-2").text(ingredientsList[i])).append($('<hr>'));
+    };
+    for (let i = 0; i < stepList.length; i++){
+      $('#instructions').append($('<p>').text(stepList[i]));
+    };
   });
 
 };
@@ -167,7 +178,7 @@ $(".initSearchClick").on("click", event => {
   }
 
 
-  $("#searchTarget").text(`You're looking for ${foodInput}`);
+  $("#searchTarget").text(`You're looking for "${foodInput}"`);
   snoonacularCalls();
   displayRestaraunts();
   $("#initSearchPage").empty();
