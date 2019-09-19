@@ -15,10 +15,10 @@ $(document).ready(function () {
       console.log(position)
       lat = position.coords.latitude;
       lng = position.coords.longitude;
-      latTrunc = parseFloat(lat.toFixed(5));
-      lngTrunc = parseFloat(lng.toFixed(5));
-      console.log(lat, lng);
-      console.log(latTrunc, lngTrunc);
+      latTrunc = lat.toFixed(5)
+      lngTrunc = lng.toFixed(5)
+
+      
     },
     // if they refuse permission
     function (error) {
@@ -54,7 +54,7 @@ const displayRestaraunts = () => {
   searchWord = searchWord.toLowerCase();
   $('#googleMaps').empty()
   $.ajax({
-    url: proxyurl + `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latTrunc},${lngTrunc}&radius=5280&type=restaurant&keyword=${searchWord}&key=AIzaSyC5MbQE-0lUqvgXhxVRhDCK05t0nvMrphM`,
+    url: proxyurl + `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latTrunc},${lngTrunc}&radius=5200&type=restaurant&keyword=${searchWord}&key=AIzaSyC5MbQE-0lUqvgXhxVRhDCK05t0nvMrphM`,
     method: 'GET'
   }).then(function (response) {
     var results = response.results
@@ -65,8 +65,8 @@ const displayRestaraunts = () => {
     var address = results[i].vicinity
     var price_level = results[i].price_level
     var rating = results[i].rating
-  
-
+    var link = results[i].photos[0].html_attributions[0]
+    console.log(link)
     $infoDiv = $('<div>')
     $infoDiv.addClass("card card-text text-center bordered border-2 border-dark mb-3 pt-2 pb-2")
     $nameDiv = $('<div>')
@@ -87,4 +87,3 @@ const displayRestaraunts = () => {
     }
   })
 }
-

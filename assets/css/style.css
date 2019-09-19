@@ -59,12 +59,10 @@ body,html{
   border-width: 4px !important;
 }
 
-#map {
-  height: 100%;
-  background-color: blue;
-}
 
-
+#ingredients hr:last-child {
+  display:none;
+} 
 
 @media screen and (max-width: 990px) {
   .border-sm-custom {
