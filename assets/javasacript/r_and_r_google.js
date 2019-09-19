@@ -108,7 +108,13 @@ const displayRestaraunts = () => {
     $addressDiv.text(address)
     $price_levelDiv.text("Price Level: " + price_level)
     $infoDiv.append($nameDiv, $addressDiv, $price_levelDiv, $ratingDiv)
-      
+
+    $infoDiv.attr({
+      id: "infoDiv"
+    })
+   
+    $('#map').append($infoDiv)
+
     }
       initMap(searchWord);
   })
