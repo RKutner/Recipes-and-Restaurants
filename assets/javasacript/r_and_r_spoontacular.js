@@ -1,5 +1,6 @@
 const apiKey = "95b6a8ee9c4447c694497d6c79136605"; //spoonacular api
 var database = firebase.database();
+var lastSearch = "";
 
 //spoonacular issue
 const obtainRecipe = (food, response) => {
@@ -51,20 +52,20 @@ const createCards = food => {
         const $cardImgTop = $("<img>").addClass("card-img-top img-thumbnail");
         $cardImgTop.attr(
           "src",
-          ` https://spoonacular.com/recipeImages/${recipeResults.id}-636x393.jpg`
+          ` https://spoonacular.com/recipeImages/${recipeResults.image}`
         );
         const $cardBody = $("<div>").addClass("card-body");
         const $cardTitle = $("<h5>").addClass("card-title");
         $cardTitle.text(recipeResults.title);
         const $cardSubtitle = $("<h6>").addClass("card-subtitle");
         $cardSubtitle.text(
-          `Price: $${(
+          `Approximate Ingredient Price: $${(
             (recipes.pricePerServing * recipeResults.servings) /
             100
           ).toFixed(2)}`
         );
         const $cardText = $("<p>").addClass("card-text");
-        $cardText.text(`Ready In: ${recipeResults.readyInMinutes} minutes`);
+        $cardText.text(`Cook Time: ${recipeResults.readyInMinutes} minutes`);
 
         const $cardRow = $("<div>").addClass("row");
         const $cardColLeft = $("<div>").addClass("col-sm-10");
@@ -163,7 +164,7 @@ $(document).on("click", ".searchClick", event => {
     return;
   }
 
-  $("#searchTarget").text(`You're looking for ${foodInput}`);
+  $("#searchTarget").text(`You're looking for "${foodInput}"!`);
   snoonacularCalls();
   displayRestaraunts();
 });
@@ -173,15 +174,17 @@ $(document).on("click", ".getRecipe", consoleLogInfo);
 $(".initSearchClick").on("click", event => {
   event.preventDefault();
   let foodInput = $(".searchField").val();
+  lastSearch = $(".searchField").val()
   if (foodInput === "") {
     return;
   }
 
 
-  $("#searchTarget").text(`You're looking for "${foodInput}"`);
+  $("#searchTarget").text(`You're looking for "${foodInput}"!`);
   snoonacularCalls();
   displayRestaraunts();
   $("#initSearchPage").empty();
+  $(".searchField").val(lastSearch);
   $("#main").show();
 });
 
