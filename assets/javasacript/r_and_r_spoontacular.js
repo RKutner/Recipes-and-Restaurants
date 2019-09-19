@@ -11,7 +11,6 @@ const obtainRecipe = (food, response) => {
   }
 
   obtainRecipeInfo(food, results, ids);
-
 };
 
 // what i want is (response,results) => {blah blah}
@@ -30,7 +29,6 @@ const obtainRecipeInfo = (food, recipeResults, ids) => {
 const saveToDB = (food, recipeResults, recipes) => {
   let savedRecipes = {};
   for (let i = 0; i < recipes.length; i++) {
-
     savedRecipes[recipeResults[i].id] = [recipeResults[i], recipes[i]];
   }
   database.ref(`/${food}/`).set(savedRecipes);
@@ -44,44 +42,98 @@ const createCards = food => {
     .once("value")
     .then(snapshot => {
       let info = snapshot.val();
+      const $carousel = $("<div>").attr({
+        id: "test",
+        class: "carousel slide",
+        "data-ride": "carousel"
+      });
+      const $prev = $("<a>").attr({
+        class: "carousel-control-prev",
+        href: "#test",
+        role: "button",
+        "data-slide": "prev"
+      });
+      $prev.html(
+        `<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span>`
+      );
+      const $next = $("<a>").attr({
+        class: "carousel-control-next",
+        href: "#test",
+        role: "button",
+        "data-slide": "next"
+      });
+      $next.html(
+        `<span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span>`
+      );
+      const $carouselIndicator = $("<ol>").addClass("carousel-indicators");
+      const $carouselInner = $("<div>").addClass("carousel-inner");
+      let counter = 0;
+
       for (let item in info) {
         const recipeResults = info[item][0];
         const recipes = info[item][1];
-        const $card = $("<div>").addClass("card recipe mb-2");
-        $card.attr({ "data-id": recipeResults.id, "data-food": food });
-        const $cardImgTop = $("<img>").addClass("card-img-top img-thumbnail");
-        $cardImgTop.attr(
-          "src",
-          ` https://spoonacular.com/recipeImages/${recipeResults.image}`
-        );
-        const $cardBody = $("<div>").addClass("card-body");
-        const $cardTitle = $("<h5>").addClass("card-title");
-        $cardTitle.text(recipeResults.title);
-        const $cardSubtitle = $("<h6>").addClass("card-subtitle");
-        $cardSubtitle.text(
+
+        const $indicator = $("<li>").attr({
+          "data-target": "#test",
+          "data-slide-to": counter
+        });
+
+        const $carouselItem = $("<div>").attr({
+          class: "carousel-item recipe",
+          "data-id": recipeResults.id,
+          "data-food": food
+        });
+
+        const $carImage = $("<img>").addClass("card-img-top img-thumbnail");
+        $carImage.attr({
+          class: "d-block w-100",
+          src: ` https://spoonacular.com/recipeImages/${recipeResults.image}`,
+          alt: recipeResults.title
+        });
+
+        if (!counter) {
+          $indicator.addClass("active");
+          $carouselItem.addClass("active");
+        }
+        const $carInfo = $("<div>").attr({
+          class: "carousel-caption d-none d-md-block bg-info"
+        });
+
+        const $carTitle = $("<h5>").text(recipeResults.title);
+        const $carSubtitle = $("<h6>").text(
           `Approximate Ingredient Price: $${(
+
+       
             (recipes.pricePerServing * recipeResults.servings) /
             100
           ).toFixed(2)}`
         );
-        const $cardText = $("<p>").addClass("card-text");
-        $cardText.text(`Cook Time: ${recipeResults.readyInMinutes} minutes`);
+
+        const $carText = $("<p>").text(
+          `Cook Time: ${recipeResults.readyInMinutes} minutes`
+        );
 
         const $cardRow = $("<div>").addClass("row");
         const $cardColLeft = $("<div>").addClass("col-sm-10");
         const $cardColRight = $("<div>").addClass("col-sm-2");
-        const $cardButton = $("<button>").addClass("fas fa-list-alt btn-lg btn-warning mt-3 getRecipe");
-        $cardButton.attr("data-toggle", "modal")
-        $cardButton.attr("data-target", "#recipeModal")
-        $cardButton.attr("type", "button")
-        
-        $cardColLeft.append($cardTitle, $cardSubtitle, $cardText);
+        const $cardButton = $("<button>").addClass(
+          "fas fa-list-alt btn-lg btn-warning mt-3 getRecipe"
+        );
+        $cardButton.attr("data-toggle", "modal");
+        $cardButton.attr("data-target", "#recipeModal");
+        $cardButton.attr("type", "button");
+
+        $cardColLeft.append($carTitle, $carSubtitle, $carText);
         $cardColRight.append($cardButton);
 
-        $cardBody.append($cardRow.append($cardColLeft, $cardColRight));
-        $card.append($cardImgTop, $cardBody);
-        $("#recipieList").append($card);
+        $carInfo.append($cardRow.append($cardColLeft, $cardColRight));
+
+        counter++;
+        $carouselIndicator.append($indicator);
+        $carouselInner.append($carouselItem.append($carImage, $carInfo));
       }
+      $carousel.append($carouselIndicator, $carouselInner, $prev, $next);
+      $("#recipieList").append($carousel);
     });
 };
 
@@ -120,6 +172,7 @@ const consoleLogInfo = event => {
   const id = $recipe.attr("data-id");
   const food = $recipe.attr("data-food");
   database
+
   .ref(`/${food}/${id}/1`)
   .once("value")
   .then(snapshot => {
@@ -155,6 +208,7 @@ const consoleLogInfo = event => {
     };
   });
 
+
 };
 
 $(document).on("click", ".searchClick", event => {
@@ -187,6 +241,7 @@ $(".initSearchClick").on("click", event => {
 
 
   $("#searchTarget").text(`You're looking for "${foodInput}"!`);
+
   snoonacularCalls();
   displayRestaraunts();
   $("#initSearchPage").empty();
@@ -199,4 +254,3 @@ $(".searchField").keyup(function(event) {
     $(".initSearchClick").click();
   }
 });
-
