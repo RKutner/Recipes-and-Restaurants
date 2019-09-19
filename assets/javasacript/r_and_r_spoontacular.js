@@ -87,6 +87,7 @@ const createCards = food => {
         const $carImage = $("<img>").addClass("card-img-top img-thumbnail");
         $carImage.attr({
           class: "d-block w-100",
+          style: "height: 500px",
           src: ` https://spoonacular.com/recipeImages/${recipeResults.image}`,
           alt: recipeResults.title
         });
@@ -96,7 +97,7 @@ const createCards = food => {
           $carouselItem.addClass("active");
         }
         const $carInfo = $("<div>").attr({
-          class: "carousel-caption transparent-panel-dark d-none d-md-block"
+          class: "carousel-caption rounded-top-lg transparent-panel-dark d-none d-md-block"
         });
 
         const $carTitle = $("<h5>").text(recipeResults.title);
@@ -196,8 +197,9 @@ const consoleLogInfo = event => {
     // console.log(ingredientsList)
     // console.log(stepList)
     // console.log(info.sourceUrl)
+    $('.recipeLink').attr('href', info.sourceUrl);
 
-    $('#recipeModalTitle').text(info.title);
+    // $('#recipeModalTitle').text(info.title);
 
     for (let i = 0; i < ingredientsList.length; i++){
       $('#ingredients').append($('<p>').addClass("font-weight-light mb-2").text(ingredientsList[i])).append($('<hr>'));
