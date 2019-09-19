@@ -108,9 +108,11 @@ const displayRestaraunts = () => {
     $addressDiv.text(address)
     $price_levelDiv.text("Price Level: " + price_level)
     $infoDiv.append($nameDiv, $addressDiv, $price_levelDiv, $ratingDiv)
-      
+    $infoDiv.attr({
+      id: "infoDiv"
+    })
    
-    // $('#googleMaps').append($infoDiv)
+    $('#map').append($infoDiv)
 
     }
   })
