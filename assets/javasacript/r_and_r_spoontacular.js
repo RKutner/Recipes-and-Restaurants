@@ -165,6 +165,9 @@ $(document).on("click", ".searchClick", event => {
 
   $("#searchTarget").text(`You're looking for ${foodInput}`);
   snoonacularCalls();
+ 
+  
+  mapRestaraunts();
   displayRestaraunts();
 });
 $(document).on("click", ".getRecipe", consoleLogInfo);
@@ -180,6 +183,8 @@ $(".initSearchClick").on("click", event => {
 
   $("#searchTarget").text(`You're looking for "${foodInput}"`);
   snoonacularCalls();
+  
+  mapRestaraunts();
   displayRestaraunts();
   $("#initSearchPage").empty();
   $("#main").show();
