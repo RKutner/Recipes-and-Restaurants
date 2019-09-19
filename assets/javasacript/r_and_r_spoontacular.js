@@ -1,4 +1,4 @@
-const apiKey = "95b6a8ee9c4447c694497d6c79136605"; //spoonacular api
+const apiKey = "9eeb1c3c7a454e8784a2ce72c0ac6299"; //spoonacular api
 var database = firebase.database();
 
 //spoonacular issue
@@ -123,7 +123,7 @@ const consoleLogInfo = event => {
   .once("value")
   .then(snapshot => {
     const info = snapshot.val();
-    console.log(info)
+    // console.log(info)
     //name of the recipe 
 
     //ingredients
@@ -139,10 +139,10 @@ const consoleLogInfo = event => {
       stepList.push(`Step ${index+1}: ${step.step}`)
     })
 
-    console.log(info.title)
-    console.log(ingredientsList)
-    console.log(stepList)
-    console.log(info.sourceUrl)
+    // console.log(info.title)
+    // console.log(ingredientsList)
+    // console.log(stepList)
+    // console.log(info.sourceUrl)
 
     $('#recipeModalTitle').text(info.title);
 
@@ -162,10 +162,14 @@ $(document).on("click", ".searchClick", event => {
   if (foodInput === "") {
     return;
   }
-
+  if($("#zipCode").val()){
+    zipSearch()
+  }else{
+    
+  displayRestaraunts();
+  }
   $("#searchTarget").text(`You're looking for ${foodInput}`);
   snoonacularCalls();
-  displayRestaraunts();
 });
 $(document).on("click", ".getRecipe", consoleLogInfo);
 
