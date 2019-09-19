@@ -96,14 +96,12 @@ const createCards = food => {
           $carouselItem.addClass("active");
         }
         const $carInfo = $("<div>").attr({
-          class: "carousel-caption d-none d-md-block bg-info"
+          class: "carousel-caption transparent-panel-dark d-none d-md-block"
         });
 
         const $carTitle = $("<h5>").text(recipeResults.title);
         const $carSubtitle = $("<h6>").text(
           `Approximate Ingredient Price: $${(
-
-       
             (recipes.pricePerServing * recipeResults.servings) /
             100
           ).toFixed(2)}`
@@ -113,20 +111,21 @@ const createCards = food => {
           `Cook Time: ${recipeResults.readyInMinutes} minutes`
         );
 
-        const $cardRow = $("<div>").addClass("row");
-        const $cardColLeft = $("<div>").addClass("col-sm-10");
-        const $cardColRight = $("<div>").addClass("col-sm-2");
+        // const $cardRow = $("<div>").addClass("row");
+        // const $cardColLeft = $("<div>").addClass("col-sm-10");
+        // const $cardColRight = $("<div>").addClass("col-sm-2");
         const $cardButton = $("<button>").addClass(
-          "fas fa-list-alt btn-lg btn-warning mt-3 getRecipe"
+          "fas fa-list-alt btn-lg btn-warning mb-3 getRecipe"
         );
         $cardButton.attr("data-toggle", "modal");
         $cardButton.attr("data-target", "#recipeModal");
         $cardButton.attr("type", "button");
 
-        $cardColLeft.append($carTitle, $carSubtitle, $carText);
-        $cardColRight.append($cardButton);
+        // $cardColLeft.append($carTitle, $carSubtitle, $carText);
+        // $cardColRight.append($cardButton);
 
-        $carInfo.append($cardRow.append($cardColLeft, $cardColRight));
+        // $carInfo.append($cardRow.append($cardColLeft, $cardColRight));
+        $carInfo.append($carTitle, $carSubtitle, $carText, $cardButton);
 
         counter++;
         $carouselIndicator.append($indicator);
