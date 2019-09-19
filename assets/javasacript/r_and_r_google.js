@@ -45,7 +45,7 @@ $(document).ready(function () {
           lng = response.Longitude;
             latTrunc = parseFloat(lat.toFixed(5))
             lngTrunc = parseFloat(lng.toFixed(5))
-            displayRestaraunts()
+            displayRestaraunts();
         
           })
         
@@ -109,11 +109,10 @@ const displayRestaraunts = () => {
     $price_levelDiv.text("Price Level: " + price_level)
     $infoDiv.append($nameDiv, $addressDiv, $price_levelDiv, $ratingDiv)
       
-   
-    // $('#googleMaps').append($infoDiv)
-
     }
+      initMap(searchWord);
   })
+  initMap(searchWord);
 }
 
 var map;
