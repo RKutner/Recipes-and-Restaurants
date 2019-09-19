@@ -63,9 +63,10 @@ const displayRestaraunts = () => {
   console.log(latTrunc)
   console.log(lngTrunc)
   $.ajax({
-    url: proxyurl + `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latTrunc},${lngTrunc}&radius=1500&type=restaurant&keyword=${searchWord}&key=AIzaSyC5MbQE-0lUqvgXhxVRhDCK05t0nvMrphM`,
+    url: proxyurl + `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latTrunc},${lngTrunc}&radius=1500&type=restaurant&keyword=${searchWord}&key=AIzaSyCZf9WYU3syTaCtYpejBUknJB-3Z3htO6s`,
     method: 'GET'
   }).then(function (response) {
+    console.log(response);
     var results = response.results
 
     for (let i = 0; i < 14; i++){
