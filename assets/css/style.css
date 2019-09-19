@@ -49,6 +49,10 @@ body,html{
   color:white;
 }
 
+.transparent-panel-dark {
+  background: rgba(52,58,64,0.5)
+}
+
 .border-2 {
   border-width: 2px !important;
 }
