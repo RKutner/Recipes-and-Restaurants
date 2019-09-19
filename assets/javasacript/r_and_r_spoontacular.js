@@ -1,5 +1,6 @@
-const apiKey = "95b6a8ee9c4447c694497d6c79136605"; //spoonacular api
+const apiKey = "9eeb1c3c7a454e8784a2ce72c0ac6299"; //spoonacular api
 var database = firebase.database();
+var lastSearch = "";
 
 //spoonacular issue
 const obtainRecipe = (food, response) => {
@@ -71,6 +72,7 @@ const createCards = food => {
       for (let item in info) {
         const recipeResults = info[item][0];
         const recipes = info[item][1];
+
         const $indicator = $("<li>").attr({
           "data-target": "#test",
           "data-slide-to": counter
@@ -99,13 +101,16 @@ const createCards = food => {
 
         const $carTitle = $("<h5>").text(recipeResults.title);
         const $carSubtitle = $("<h6>").text(
-          `Price: $${(
+          `Approximate Ingredient Price: $${(
+
+       
             (recipes.pricePerServing * recipeResults.servings) /
             100
           ).toFixed(2)}`
         );
+
         const $carText = $("<p>").text(
-          `Ready In: ${recipeResults.readyInMinutes} minutes`
+          `Cook Time: ${recipeResults.readyInMinutes} minutes`
         );
 
         const $cardRow = $("<div>").addClass("row");
@@ -167,45 +172,43 @@ const consoleLogInfo = event => {
   const id = $recipe.attr("data-id");
   const food = $recipe.attr("data-food");
   database
-    .ref(`/${food}/${id}/1`)
-    .once("value")
-    .then(snapshot => {
-      const info = snapshot.val();
-      console.log(info);
-      //name of the recipe
 
-      //ingredients
-      const ingredientsList = [];
-      const stepList = [];
-      info.extendedIngredients.forEach(ingredient => {
-        ingredientsList.push(`${ingredient.original}`);
-        // ingredientsList.push(`${ingredient.amount} ${ingredient.unit} ${ingredient.name}`)
-      });
-      //steps
-      info.analyzedInstructions[0].steps.forEach((step, index) => {
-        stepList.push(`Step ${index + 1}: ${step.step}`);
-      });
+  .ref(`/${food}/${id}/1`)
+  .once("value")
+  .then(snapshot => {
+    const info = snapshot.val();
+    // console.log(info)
+    //name of the recipe 
 
-      console.log(info.title);
-      console.log(ingredientsList);
-      console.log(stepList);
-      console.log(info.sourceUrl);
+    //ingredients
+    const ingredientsList = [];
+    const stepList =[];
+    info.extendedIngredients.forEach(ingredient => {
 
-      $("#recipeModalTitle").text(info.title);
+      ingredientsList.push(`${ingredient.original}`)
+      // ingredientsList.push(`${ingredient.amount} ${ingredient.unit} ${ingredient.name}`)
+    })
+    //steps
+    info.analyzedInstructions[0].steps.forEach((step,index) => {
+      stepList.push(`Step ${index+1}: ${step.step}`)
+    })
 
-      for (let i = 0; i < ingredientsList.length; i++) {
-        $("#ingredients")
-          .append(
-            $("<p>")
-              .addClass("font-weight-light mb-2")
-              .text(ingredientsList[i])
-          )
-          .append($("<hr>"));
-      }
-      for (let i = 0; i < stepList.length; i++) {
-        $("#instructions").append($("<p>").text(stepList[i]));
-      }
-    });
+    // console.log(info.title)
+    // console.log(ingredientsList)
+    // console.log(stepList)
+    // console.log(info.sourceUrl)
+
+    $('#recipeModalTitle').text(info.title);
+
+    for (let i = 0; i < ingredientsList.length; i++){
+      $('#ingredients').append($('<p>').addClass("font-weight-light mb-2").text(ingredientsList[i])).append($('<hr>'));
+    };
+    for (let i = 0; i < stepList.length; i++){
+      $('#instructions').append($('<p>').text(stepList[i]));
+    };
+  });
+
+
 };
 
 $(document).on("click", ".searchClick", event => {
@@ -215,9 +218,15 @@ $(document).on("click", ".searchClick", event => {
     return;
   }
 
-  $("#searchTarget").text(`You're looking for ${foodInput}`);
-  snoonacularCalls();
+  if($("#zipCode").val()){
+    zipSearch()
+  }else{
+    
   displayRestaraunts();
+  }
+  $("#searchTarget").text(`You're looking for ${foodInput}`);
+
+  snoonacularCalls();
 });
 $(document).on("click", ".getRecipe", consoleLogInfo);
 
@@ -225,14 +234,18 @@ $(document).on("click", ".getRecipe", consoleLogInfo);
 $(".initSearchClick").on("click", event => {
   event.preventDefault();
   let foodInput = $(".searchField").val();
+  lastSearch = $(".searchField").val()
   if (foodInput === "") {
     return;
   }
 
-  $("#searchTarget").text(`You're looking for "${foodInput}"`);
+
+  $("#searchTarget").text(`You're looking for "${foodInput}"!`);
+
   snoonacularCalls();
   displayRestaraunts();
   $("#initSearchPage").empty();
+  $(".searchField").val(lastSearch);
   $("#main").show();
 });
 

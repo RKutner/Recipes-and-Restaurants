@@ -4,7 +4,9 @@ var lat;
 var lng;
 // prevents CORS errors
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
-const zipCode = $("#zipCode").value;
+let latTrunc;
+let lngTrunc;
+
 
 
 $(document).ready(function () {
@@ -12,11 +14,14 @@ $(document).ready(function () {
   if (navigator.geolocation) {
     // pulls location
     navigator.geolocation.getCurrentPosition(function (position) {
-      console.log(position)
+      // console.log(position)
       lat = position.coords.latitude;
       lng = position.coords.longitude;
       latTrunc = lat.toFixed(5)
       lngTrunc = lng.toFixed(5)
+      console.log(latTrunc);
+      console.log(lngTrunc);
+
 
       
     },
@@ -25,34 +30,38 @@ $(document).ready(function () {
       if (error.code == error.PERMISSION_DENIED)
       console.log("No automatic location provided");
     });
-    navigator.geolocation.getCurrentPosition(function (position) {
-    })
   } 
 });
 
   
   
-  // function zipSearch() {
-  //     $.ajax({
-  //         url: proxyurl + `http://api.zip-codes.com/ZipCodesAPI.svc/1.0/QuickGetZipCodeDetails/${zipCode}?key=OLFMPABGVZQOZN3XNPZ4`,
-  //         method: "GET"
-  //       }).then(function (response) {
-  //           lat = response.latitude;
-  //           lng = response.longitude;
-  //           latTrunc = lat.toFixed(5)
-  //           lngTrunc = lng.toFixed(5)
-  //           console.log(lat)
-  //           console.log(lng)
+  function zipSearch() {
+    const zipCode = $("#zipCode").val();
+      $.ajax({
+          url: proxyurl + `http://api.zip-codes.com/ZipCodesAPI.svc/1.0/QuickGetZipCodeDetails/${zipCode}?key=OLFMPABGVZQOZN3XNPZ4`,
+          method: "GET"
+        }).then(function (response) {
+          console.log(response)
+          console.log(response.Latitude);
+          console.log(response.Longitude);
+          lat = response.Latitude;
+          lng = response.Longitude;
+          console.log(lat);
+          console.log(lng);
+            latTrunc = parseFloat(lat.toFixed(5))
+            lngTrunc = parseFloat(lng.toFixed(5))
+            displayRestaraunts()
         
+          })
         
-  //         })
-        
-  //       }
+        }
 
 const displayRestaraunts = () => {
   let searchWord = $('.searchField').val().trim()
   searchWord = searchWord.toLowerCase();
   $('#googleMaps').empty()
+  console.log(latTrunc)
+  console.log(lngTrunc)
   $.ajax({
     url: proxyurl + `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latTrunc},${lngTrunc}&radius=1500&type=restaurant&keyword=${searchWord}&key=AIzaSyC5MbQE-0lUqvgXhxVRhDCK05t0nvMrphM`,
     method: 'GET'
@@ -61,12 +70,12 @@ const displayRestaraunts = () => {
 
     for (let i = 0; i < 14; i++){
     var name = results[i].name
-    console.log(results)
+    // console.log(results)
     var address = results[i].vicinity
     var price_level = results[i].price_level
     var rating = results[i].rating
     var link = results[i].photos[0].html_attributions[0]
-    console.log(link)
+    // console.log(link)
     $infoDiv = $('<div>')
     $infoDiv.addClass("card card-text text-center bordered border-2 border-dark mb-3 pt-2 pb-2")
     $nameDiv = $('<div>')
