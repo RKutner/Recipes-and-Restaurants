@@ -79,3 +79,7 @@ body,html{
     width: 250px;
     }
 }
+
+.mapScreen{
+  height: 100vh;
+}
