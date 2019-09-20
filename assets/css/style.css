@@ -76,7 +76,12 @@ body,html{
 
 @media screen and (max-width: 767px) {
   .searchbar:hover > .search_input{
-    width: 250px;
+    width: 325px;
+    }
+}
+@media screen and (max-width: 440px) {
+  .searchbar:hover > .search_input{
+    width: 200px;
     }
 }
 
