@@ -81,7 +81,8 @@ body,html{
 }
 
 .mapScreen{
-  height: 100vh;
+  margin-top: 10px;
+  height: 460px;
 }
 
 #infoDiv{
