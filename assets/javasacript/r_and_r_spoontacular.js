@@ -1,4 +1,4 @@
-const apiKey = "9eeb1c3c7a454e8784a2ce72c0ac6299"; //spoonacular api
+const apiKey = "06b99f07ade6403dbb1f9c643c107892"; //spoonacular api
 var database = firebase.database();
 var lastSearch = "";
 
