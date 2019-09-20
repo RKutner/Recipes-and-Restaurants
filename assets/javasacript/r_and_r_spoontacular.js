@@ -192,6 +192,10 @@ const consoleLogInfo = event => {
     info.analyzedInstructions[0].steps.forEach((step,index) => {
       stepList.push(`Step ${index+1}: ${step.step}`)
     })
+    $('.recipieLink').empty();
+    $('#ingredients').empty();
+    $('#instructions').empty();
+    $('#recipeModalTitle').empty();
 
     // console.log(info.title)
     // console.log(ingredientsList)
@@ -199,7 +203,7 @@ const consoleLogInfo = event => {
     // console.log(info.sourceUrl)
     $('.recipeLink').attr('href', info.sourceUrl);
 
-    // $('#recipeModalTitle').text(info.title);
+    $('#recipeModalTitle').text(info.title);
 
     for (let i = 0; i < ingredientsList.length; i++){
       $('#ingredients').append($('<p>').addClass("font-weight-light mb-2").text(ingredientsList[i])).append($('<hr>'));
@@ -225,7 +229,7 @@ $(document).on("click", ".searchClick", event => {
     
   displayRestaraunts();
   }
-  $("#searchTarget").text(`You're looking for ${foodInput}`);
+  $("#searchTarget").text(`You're looking for "${foodInput}"`);
 
   snoonacularCalls();
 
