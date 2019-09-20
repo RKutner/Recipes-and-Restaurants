@@ -77,7 +77,9 @@ const mapRestaraunts = () => {
 const displayRestaraunts = () => {
   let searchWord = $('.searchField').val().trim()
   searchWord = searchWord.toLowerCase();
+
   $('#map').empty()
+
   $.ajax({
     url: proxyurl + `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=5200&type=restaurant&keyword=${searchWord}&key=AIzaSyCZf9WYU3syTaCtYpejBUknJB-3Z3htO6s`,
     method: 'GET'
@@ -102,6 +104,7 @@ const displayRestaraunts = () => {
         id: "infoDiv"
       })
       $('#map').append($infoDiv)
+
     }
   })
 }
