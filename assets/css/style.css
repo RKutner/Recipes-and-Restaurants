@@ -77,7 +77,12 @@ body,html{
 @media screen and (max-width: 767px) {
   .searchbar:hover > .search_input{
     width: 325px;
+  
     }
+  .carousel-caption {
+    /* width: 200px !important; */
+    display: block !important;
+  }
 }
 @media screen and (max-width: 440px) {
   .searchbar:hover > .search_input{
